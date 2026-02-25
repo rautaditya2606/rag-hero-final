@@ -42,7 +42,7 @@ const Hero = () => (
           <span className="italic text-gray-400">on Your Private Data</span>
         </h1>
         <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">
-          Ingest, retrieve, and generate accurate answers using a scalable RAG pipeline powered by vector search and enterprise-grade security.
+          The headless RAG backend for enterprise. Ingest, retrieve, and generate accurate answers using a distributed pipeline powered by Celery, Vault, and multi-framework flexibility.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button className="w-full sm:w-auto bg-black text-white px-8 py-4 rounded-full text-lg font-medium hover:scale-105 transition-transform flex items-center justify-center gap-2">
@@ -146,12 +146,12 @@ const HowItWorks = () => (
         <div className="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-gray-100 -translate-y-1/2 -z-10" />
         <div className="grid md:grid-cols-6 gap-8">
           {[
-            { step: "01", label: "Upload", icon: <Layers /> },
-            { step: "02", label: "Chunk", icon: <Cpu /> },
-            { step: "03", label: "Embed", icon: <Zap /> },
-            { step: "04", label: "Store", icon: <Database /> },
-            { step: "05", label: "Retrieve", icon: <Search /> },
-            { step: "06", label: "Generate", icon: <Globe /> },
+            { step: "01", label: "Upload", icon: <Layers />, sub: "Async via Celery" },
+            { step: "02", label: "Chunk", icon: <Cpu />, sub: "Smart splitting" },
+            { step: "03", label: "Embed", icon: <Zap />, sub: "Multi-model" },
+            { step: "04", label: "Store", icon: <Database />, sub: "Vector storage" },
+            { step: "05", label: "Retrieve", icon: <Search />, sub: "Hybrid search" },
+            { step: "06", label: "Generate", icon: <Globe />, sub: "Streaming output" },
           ].map((item, i) => (
             <div key={i} className="flex flex-col items-center">
               <div className="w-16 h-16 rounded-full bg-white border border-gray-200 flex items-center justify-center mb-4 shadow-sm relative z-10">
@@ -159,6 +159,7 @@ const HowItWorks = () => (
               </div>
               <span className="text-[10px] font-bold tracking-widest text-gray-400 uppercase mb-1">{item.step}</span>
               <span className="font-medium">{item.label}</span>
+              <span className="text-[10px] text-gray-400 mt-1">{item.sub}</span>
             </div>
           ))}
         </div>
@@ -175,10 +176,10 @@ const Features = () => (
           <h2 className="text-4xl font-serif mb-8">Core Capabilities</h2>
           <div className="space-y-8">
             {[
-              { title: "Document Ingestion", desc: "Native support for PDF, DOCX, Markdown, and API-based connectors." },
+              { title: "Cost Observability", desc: "Real-time dashboards for token consumption, model costs, and user-level quotas." },
+              { title: "Headless Mode", desc: "Full API access via x-api-key for seamless integration into your existing software stack." },
               { title: "Hybrid Search", desc: "Combines semantic vector search with traditional keyword matching for precision." },
-              { title: "Metadata Filtering", desc: "Apply granular filters based on source, date, or custom tags." },
-              { title: "Secure Auth", desc: "Enterprise SSO and Keycloak integration for fine-grained access control." }
+              { title: "Enterprise SSO", desc: "Native support for Google Workspace, Keycloak, and OIDC/SAML providers." }
             ].map((f, i) => (
               <div key={i} className="flex gap-4">
                 <CheckCircle2 className="text-emerald-500 shrink-0" size={24} />
@@ -191,13 +192,13 @@ const Features = () => (
           </div>
         </div>
         <div>
-          <h2 className="text-4xl font-serif mb-8">Advanced Features</h2>
+          <h2 className="text-4xl font-serif mb-8">Advanced Infrastructure</h2>
           <div className="space-y-8">
             {[
-              { title: "Multi-tenant Support", desc: "Isolate data and models across different departments or clients." },
-              { title: "Model-Agnostic Routing", desc: "Switch between OpenAI, Anthropic, or local models like Llama 3." },
-              { title: "Custom Prompt Engineering", desc: "Visual editor for crafting and testing system instructions." },
-              { title: "Scalable Architecture", desc: "Built on FastAPI and Weaviate for high-throughput production loads." }
+              { title: "Streaming Responses", desc: "Real-time, low-latency answers via WebSockets for a fluid user experience." },
+              { title: "Framework Agnostic", desc: "Switch between Haystack or Weaviate Verba pipelines based on complexity." },
+              { title: "Audit Logs", desc: "Complete traceability of who accessed what data and when for compliance." },
+              { title: "Zero-Trust Secrets", desc: "Hardware-level security using HashiCorp Vault for all API keys and credentials." }
             ].map((f, i) => (
               <div key={i} className="flex gap-4">
                 <CheckCircle2 className="text-blue-500 shrink-0" size={24} />
@@ -228,14 +229,14 @@ const Architecture = () => (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
           <div className="space-y-6">
             <div className="p-6 rounded-xl border border-white/10 bg-white/5">
-              <h4 className="text-xs font-bold tracking-widest uppercase text-gray-500 mb-4">Frontend</h4>
-              <p className="text-lg font-medium">Next.js Dashboard</p>
-              <p className="text-sm text-gray-400 mt-2">React-based UI for management and chat interfaces.</p>
+              <h4 className="text-xs font-bold tracking-widest uppercase text-gray-500 mb-4">Infrastructure</h4>
+              <p className="text-lg font-medium">RabbitMQ & Redis</p>
+              <p className="text-sm text-gray-400 mt-2">Distributed task orchestration and ultra-fast session caching.</p>
             </div>
             <div className="p-6 rounded-xl border border-white/10 bg-white/5">
-              <h4 className="text-xs font-bold tracking-widest uppercase text-gray-500 mb-4">Auth</h4>
-              <p className="text-lg font-medium">Keycloak / SSO</p>
-              <p className="text-sm text-gray-400 mt-2">Identity management and RBAC.</p>
+              <h4 className="text-xs font-bold tracking-widest uppercase text-gray-500 mb-4">Secrets</h4>
+              <p className="text-lg font-medium">HashiCorp Vault</p>
+              <p className="text-sm text-gray-400 mt-2">Enterprise-grade encryption for all sensitive credentials.</p>
             </div>
           </div>
 
@@ -243,21 +244,21 @@ const Architecture = () => (
             <div className="p-8 rounded-2xl border-2 border-emerald-500/50 bg-emerald-500/10 text-center relative">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-emerald-500 text-[10px] font-bold rounded-full">CORE API</div>
               <h4 className="text-xs font-bold tracking-widest uppercase text-emerald-400 mb-4">Backend</h4>
-              <p className="text-2xl font-bold">FastAPI</p>
-              <p className="text-sm text-gray-400 mt-2">Async processing & LLM orchestration.</p>
+              <p className="text-2xl font-bold">FastAPI + Celery</p>
+              <p className="text-sm text-gray-400 mt-2">Async document processing & LLM orchestration.</p>
             </div>
           </div>
 
           <div className="space-y-6">
             <div className="p-6 rounded-xl border border-white/10 bg-white/5">
-              <h4 className="text-xs font-bold tracking-widest uppercase text-gray-500 mb-4">Vector DB</h4>
-              <p className="text-lg font-medium">Weaviate</p>
-              <p className="text-sm text-gray-400 mt-2">High-performance semantic storage.</p>
+              <h4 className="text-xs font-bold tracking-widest uppercase text-gray-500 mb-4">Storage</h4>
+              <p className="text-lg font-medium">Weaviate + Postgres</p>
+              <p className="text-sm text-gray-400 mt-2">Hybrid vector storage and robust metadata management.</p>
             </div>
             <div className="p-6 rounded-xl border border-white/10 bg-white/5">
               <h4 className="text-xs font-bold tracking-widest uppercase text-gray-500 mb-4">LLM Layer</h4>
-              <p className="text-lg font-medium">Model Gateway</p>
-              <p className="text-sm text-gray-400 mt-2">OpenAI, Anthropic, or Local Llama.</p>
+              <p className="text-lg font-medium">Haystack / Verba</p>
+              <p className="text-sm text-gray-400 mt-2">Flexible retrieval pipelines with multi-framework support.</p>
             </div>
           </div>
         </div>
@@ -341,6 +342,61 @@ const Footer = () => (
   </footer>
 );
 
+const DeveloperSection = () => (
+  <section className="py-24 px-6 bg-gray-50">
+    <div className="max-w-6xl mx-auto">
+      <div className="grid md:grid-cols-2 gap-16 items-center">
+        <div>
+          <span className="text-xs font-bold tracking-widest uppercase text-blue-500 mb-4 block">Built for Developers</span>
+          <h2 className="text-5xl font-serif mb-6">A Headless RAG Backend for Your Custom Apps</h2>
+          <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+            RAG Studio provides a robust External API with x-api-key authentication. Manage keys, set usage limits, and integrate powerful retrieval capabilities into your own software stack with simple HTTP requests.
+          </p>
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center">
+                <div className="w-2 h-2 rounded-full bg-blue-500" />
+              </div>
+              <span className="font-medium">Clean API Documentation & SDKs</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center">
+                <div className="w-2 h-2 rounded-full bg-blue-500" />
+              </div>
+              <span className="font-medium">Multi-tenant SaaS Ready Infrastructure</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center">
+                <div className="w-2 h-2 rounded-full bg-blue-500" />
+              </div>
+              <span className="font-medium">Real-time Usage Monitoring</span>
+            </div>
+          </div>
+        </div>
+        <div className="bg-black rounded-2xl p-6 shadow-2xl overflow-hidden font-mono text-sm text-gray-300">
+          <div className="flex gap-2 mb-4">
+            <div className="w-3 h-3 rounded-full bg-red-500/50" />
+            <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
+            <div className="w-3 h-3 rounded-full bg-green-500/50" />
+          </div>
+          <div className="space-y-2">
+            <p className="text-emerald-400"># Query your private knowledge base</p>
+            <p>curl -X POST https://api.ragstudio.io/v1/query \</p>
+            <p className="pl-4">-H <span className="text-orange-300">&quot;x-api-key: rs_live_8f2...&quot;</span> \</p>
+            <p className="pl-4">-d <span className="text-orange-300">&apos;&#123; &quot;query&quot;: &quot;What is our Q3 policy?&quot; &#125;&apos;</span></p>
+            <p className="mt-4 text-gray-500">{"// Response"}</p>
+            <p className="text-blue-300">&#123;</p>
+            <p className="pl-4">&quot;answer&quot;: &quot;Q3 policy requires...&quot;,</p>
+            <p className="pl-4">&quot;sources&quot;: [&quot;policy_v2.pdf&quot;],</p>
+            <p className="pl-4">&quot;tokens&quot;: 142</p>
+            <p className="text-blue-300">&#125;</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
 export default function LandingPage() {
   return (
     <main className="min-h-screen">
@@ -351,6 +407,7 @@ export default function LandingPage() {
       <HowItWorks />
       <Features />
       <Architecture />
+      <DeveloperSection />
       <UseCases />
       
       <section className="py-24 px-6">
