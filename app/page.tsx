@@ -1,32 +1,98 @@
 'use client';
 
-import { motion } from 'motion/react';
-import { ArrowRight, Database, Shield, Zap, Search, Layers, Cpu, Globe, CheckCircle2 } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { 
+  ArrowRight, 
+  Database, 
+  Shield, 
+  Zap, 
+  Search, 
+  Layers, 
+  Cpu, 
+  Globe, 
+  CheckCircle2, 
+  X, 
+  Server, 
+  Lock, 
+  Activity, 
+  Terminal 
+} from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
-const Navbar = () => (
-  <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center p-6">
-    <div className="glass flex items-center gap-8 px-6 py-3 rounded-full shadow-sm">
-      <div className="flex items-center gap-2">
-        <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
-          <div className="w-4 h-4 border-2 border-white rounded-sm rotate-45" />
+const Navbar = () => {
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const element = document.querySelector(id);
+    if (element) {
+      const topOffset = element.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: topOffset,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center p-6">
+      <motion.div 
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="glass flex items-center gap-8 px-6 py-3 rounded-full shadow-sm"
+      >
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
+            <div className="w-4 h-4 border-2 border-white rounded-sm rotate-45" />
+          </div>
+          <span className="font-bold text-lg tracking-tighter">Rag-Studio</span>
         </div>
-        <span className="font-bold text-lg tracking-tighter">RAG STUDIO</span>
-      </div>
-      <div className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
-        <a href="#features" className="hover:text-black transition-colors">Features</a>
-        <a href="#how-it-works" className="hover:text-black transition-colors">How it works</a>
-        <a href="#architecture" className="hover:text-black transition-colors">Architecture</a>
-        <a href="#use-cases" className="hover:text-black transition-colors">Use Cases</a>
-      </div>
-      <button className="bg-black text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition-all">
-        Request Demo
-      </button>
-    </div>
-  </nav>
-);
+        <div className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
+          {[
+            { name: 'Features', id: '#features' },
+            { name: 'How it works', id: '#how-it-works' },
+            { name: 'Architecture', id: '#architecture' },
+            { name: 'Use Cases', id: '#use-cases' }
+          ].map((link) => (
+            <motion.a
+              key={link.id}
+              href={link.id}
+              onClick={(e) => scrollToSection(e, link.id)}
+              whileHover={{ scale: 1.05, color: '#000' }}
+              whileTap={{ scale: 0.95 }}
+              className="hover:text-black transition-colors"
+            >
+              {link.name}
+            </motion.a>
+          ))}
+          <Link href="/docs">
+            <motion.span
+              whileHover={{ scale: 1.05, color: '#000' }}
+              whileTap={{ scale: 0.95 }}
+              className="hover:text-black transition-colors cursor-pointer"
+            >
+              Docs
+            </motion.span>
+          </Link>
+        </div>
+        <motion.button 
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="bg-black text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition-all"
+        >
+          Request Demo
+        </motion.button>
+      </motion.div>
+    </nav>
+  );
+};
 
-const Hero = () => (
+const Hero = ({ 
+  onOpenArchitecture
+}: { 
+  onOpenArchitecture: () => void;
+}) => (
   <section className="relative pt-40 pb-20 px-6 overflow-hidden">
     <div className="max-w-5xl mx-auto text-center relative z-10">
       <motion.div
@@ -35,20 +101,27 @@ const Hero = () => (
         transition={{ duration: 0.6 }}
       >
         <span className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest uppercase bg-gray-100 rounded-full text-gray-500">
-          Enterprise RAG Platform
+          Enterprise Rag-Studio Platform
         </span>
         <h1 className="text-6xl md:text-8xl font-serif mb-8 leading-[0.9] tracking-tight">
           Build Production-Ready AI <br />
           <span className="italic text-gray-400">on Your Private Data</span>
         </h1>
         <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">
-          The headless RAG backend for enterprise. Ingest, retrieve, and generate accurate answers using a distributed pipeline powered by Celery, Vault, and multi-framework flexibility.
+          The headless Rag-Studio backend for enterprise. Ingest, retrieve, and generate accurate answers using a distributed pipeline powered by Celery, Vault, and multi-framework flexibility.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <button className="w-full sm:w-auto bg-black text-white px-8 py-4 rounded-full text-lg font-medium hover:scale-105 transition-transform flex items-center justify-center gap-2">
-            Get Started <ArrowRight size={20} />
-          </button>
-          <button className="w-full sm:w-auto border border-gray-200 px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-50 transition-colors">
+          <Link href="/" className="w-full sm:w-auto">
+            <button 
+              className="w-full bg-black text-white px-8 py-4 rounded-full text-lg font-medium hover:scale-105 transition-transform flex items-center justify-center gap-2"
+            >
+              Get Started <ArrowRight size={20} />
+            </button>
+          </Link>
+          <button 
+            onClick={onOpenArchitecture}
+            className="w-full sm:w-auto border border-gray-200 px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-50 transition-colors"
+          >
             View Architecture
           </button>
         </div>
@@ -68,22 +141,14 @@ const Hero = () => (
             <div className="ml-4 h-5 w-64 bg-white rounded border border-gray-100" />
           </div>
           <div className="p-8 aspect-video bg-gray-50 flex items-center justify-center">
-            <div className="w-full h-full rounded-xl border-2 border-dashed border-gray-200 flex items-center justify-center bg-white/50 relative overflow-hidden">
-               <div className="absolute inset-0 dot-grid opacity-50" />
-               <div className="z-10 flex flex-col items-center gap-4">
-                  <div className="flex gap-4">
-                    <div className="w-16 h-16 bg-white rounded-lg shadow-sm border border-gray-100 flex items-center justify-center animate-bounce">
-                      <Database className="text-blue-500" />
-                    </div>
-                    <div className="w-16 h-16 bg-white rounded-lg shadow-sm border border-gray-100 flex items-center justify-center animate-bounce [animation-delay:0.2s]">
-                      <Cpu className="text-emerald-500" />
-                    </div>
-                    <div className="w-16 h-16 bg-white rounded-lg shadow-sm border border-gray-100 flex items-center justify-center animate-bounce [animation-delay:0.4s]">
-                      <Search className="text-orange-500" />
-                    </div>
-                  </div>
-                  <p className="text-sm font-mono text-gray-400">RAG_PIPELINE_ACTIVE: 200 OK</p>
-               </div>
+            <div className="w-full h-full rounded-xl border border-gray-200 relative overflow-hidden">
+              <Image 
+                src="/hero.png" 
+                alt="Rag-Studio Dashboard Illustration" 
+                fill 
+                className="object-cover"
+                priority
+              />
             </div>
           </div>
         </div>
@@ -100,7 +165,7 @@ const Problem = () => (
     <div className="max-w-6xl mx-auto">
       <div className="text-center mb-16">
         <h2 className="text-4xl font-serif mb-4">The Enterprise Knowledge Gap</h2>
-        <p className="text-gray-500 max-w-xl mx-auto">Generic LLMs fail when they don&apos;t have access to your specific context. RAG Studio bridges that gap.</p>
+        <p className="text-gray-500 max-w-xl mx-auto">Generic LLMs fail when they don&apos;t have access to your specific context. Rag-Studio bridges that gap.</p>
       </div>
       <div className="grid md:grid-cols-3 gap-8">
         {[
@@ -139,7 +204,7 @@ const HowItWorks = () => (
   <section id="how-it-works" className="py-24 px-6 border-y border-gray-100">
     <div className="max-w-6xl mx-auto">
       <div className="text-center mb-20">
-        <h2 className="text-4xl font-serif mb-4">How RAG Studio Works</h2>
+        <h2 className="text-4xl font-serif mb-4">How Rag-Studio Works</h2>
         <p className="text-gray-500">A seamless pipeline from raw data to intelligent answers.</p>
       </div>
       <div className="relative">
@@ -272,7 +337,7 @@ const UseCases = () => (
     <div className="max-w-6xl mx-auto">
       <div className="text-center mb-16">
         <h2 className="text-4xl font-serif mb-4">Real-World Applications</h2>
-        <p className="text-gray-500">How organizations are using RAG Studio today.</p>
+        <p className="text-gray-500">How organizations are using Rag-Studio today.</p>
       </div>
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
@@ -300,10 +365,10 @@ const Footer = () => (
             <div className="w-6 h-6 bg-black rounded flex items-center justify-center">
               <div className="w-3 h-3 border border-white rounded-sm rotate-45" />
             </div>
-            <span className="font-bold tracking-tighter">RAG STUDIO</span>
+            <span className="font-bold tracking-tighter">Rag-Studio</span>
           </div>
           <p className="text-sm text-gray-500 leading-relaxed">
-            The enterprise-grade platform for building, deploying, and scaling RAG-based AI applications.
+            The enterprise-grade platform for building, deploying, and scaling Rag-Studio AI applications.
           </p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-12">
@@ -333,7 +398,7 @@ const Footer = () => (
         </div>
       </div>
       <div className="mt-20 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-xs text-gray-400">© 2026 RAG Studio Inc. All rights reserved.</p>
+        <p className="text-xs text-gray-400">© 2026 AllCognix Inc. All rights reserved.</p>
         <div className="flex gap-6">
            {/* Social icons could go here */}
         </div>
@@ -348,9 +413,9 @@ const DeveloperSection = () => (
       <div className="grid md:grid-cols-2 gap-16 items-center">
         <div>
           <span className="text-xs font-bold tracking-widest uppercase text-blue-500 mb-4 block">Built for Developers</span>
-          <h2 className="text-5xl font-serif mb-6">A Headless RAG Backend for Your Custom Apps</h2>
+          <h2 className="text-5xl font-serif mb-6">A Headless Rag-Studio Backend for Your Custom Apps</h2>
           <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-            RAG Studio provides a robust External API with x-api-key authentication. Manage keys, set usage limits, and integrate powerful retrieval capabilities into your own software stack with simple HTTP requests.
+            Rag-Studio provides a robust External API with x-api-key authentication. Manage keys, set usage limits, and integrate powerful retrieval capabilities into your own software stack with simple HTTP requests.
           </p>
           <div className="space-y-4">
             <div className="flex items-center gap-3">
@@ -397,12 +462,157 @@ const DeveloperSection = () => (
   </section>
 );
 
+const ArchitectureModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-black/40 backdrop-blur-sm"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+            className="bg-white w-full max-w-5xl max-h-[90vh] overflow-y-auto no-scrollbar rounded-[2.5rem] shadow-2xl p-8 md:p-12 relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              onClick={onClose}
+              className="absolute top-8 right-8 p-2 hover:bg-gray-100 rounded-full transition-colors"
+            >
+              <X size={24} />
+            </button>
+
+            <div className="mb-12">
+              <span className="text-xs font-bold tracking-widest uppercase text-blue-500 mb-2 block">System Blueprint</span>
+              <h2 className="text-4xl font-serif">Enterprise-Grade Rag-Studio Stack</h2>
+              <p className="text-gray-500 mt-2">A deep dive into the Rag-Studio production infrastructure.</p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-12">
+              <div className="space-y-8">
+                <div className="flex gap-6">
+                  <div className="w-12 h-12 shrink-0 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-500">
+                    <Server size={24} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg mb-1">Distributed Processing</h4>
+                    <p className="text-sm text-gray-500 leading-relaxed">
+                      FastAPI handles high-concurrency requests while Celery workers manage long-running document ingestion tasks via RabbitMQ.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-6">
+                  <div className="w-12 h-12 shrink-0 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-500">
+                    <Lock size={24} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg mb-1">Zero-Trust Security</h4>
+                    <p className="text-sm text-gray-500 leading-relaxed">
+                      All API keys, DB credentials, and sensitive tokens are dynamically injected from HashiCorp Vault at runtime.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-6">
+                  <div className="w-12 h-12 shrink-0 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-500">
+                    <Activity size={24} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg mb-1">Observability & Analytics</h4>
+                    <p className="text-sm text-gray-500 leading-relaxed">
+                      Real-time token tracking and cost management integrated directly into the core pipeline for granular spend control.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-6">
+                  <div className="w-12 h-12 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-500">
+                    <Terminal size={24} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg mb-1">Multi-Framework Core</h4>
+                    <p className="text-sm text-gray-500 leading-relaxed">
+                      Switch between Haystack for complex workflows or Weaviate Verba for rapid deployment without changing your frontend.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gray-50 rounded-[2rem] p-8 border border-gray-100">
+                <h4 className="text-xs font-bold tracking-widest uppercase text-gray-400 mb-8 text-center">Data Flow Visualization</h4>
+                <div className="space-y-4">
+                  <div className="p-4 bg-white rounded-xl border border-gray-200 shadow-sm text-center font-medium text-sm">
+                    Client Request (Web / API)
+                  </div>
+                  <div className="flex justify-center">
+                    <div className="w-0.5 h-6 bg-gray-200" />
+                  </div>
+                  <div className="p-4 bg-blue-500 text-white rounded-xl shadow-md text-center font-bold text-sm">
+                    FastAPI Gateway
+                  </div>
+                  <div className="flex justify-center gap-8">
+                    <div className="w-0.5 h-6 bg-gray-200" />
+                    <div className="w-0.5 h-6 bg-gray-200" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-3 bg-white rounded-xl border border-gray-200 text-center text-xs">
+                      RabbitMQ + Celery
+                    </div>
+                    <div className="p-3 bg-white rounded-xl border border-gray-200 text-center text-xs">
+                      Redis Cache
+                    </div>
+                  </div>
+                  <div className="flex justify-center">
+                    <div className="w-0.5 h-6 bg-gray-200" />
+                  </div>
+                  <div className="p-4 bg-emerald-500 text-white rounded-xl shadow-md text-center font-bold text-sm">
+                    Weaviate Vector DB
+                  </div>
+                  <div className="flex justify-center">
+                    <div className="w-0.5 h-6 bg-gray-200" />
+                  </div>
+                  <div className="p-4 bg-black text-white rounded-xl shadow-md text-center font-bold text-sm">
+                    LLM Provider (OpenAI/Anthropic)
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-12 pt-8 border-t border-gray-100 flex justify-between items-center">
+              <div className="flex gap-4">
+                <span className="px-3 py-1 bg-gray-100 rounded-full text-[10px] font-bold text-gray-500">v2.4.0-stable</span>
+                <span className="px-3 py-1 bg-emerald-50 rounded-full text-[10px] font-bold text-emerald-600">SOC2 Compliant</span>
+              </div>
+              <button 
+                onClick={onClose}
+                className="text-sm font-bold hover:underline"
+              >
+                Back to Overview
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
 export default function LandingPage() {
+  const [isArchitectureModalOpen, setIsArchitectureModalOpen] = useState(false);
+
   return (
     <main className="min-h-screen">
       <div className="noise" />
       <Navbar />
-      <Hero />
+      <Hero 
+        onOpenArchitecture={() => setIsArchitectureModalOpen(true)} 
+      />
       <Problem />
       <HowItWorks />
       <Features />
@@ -418,14 +628,22 @@ export default function LandingPage() {
             <button className="w-full sm:w-auto bg-black text-white px-10 py-4 rounded-full text-lg font-medium hover:scale-105 transition-transform">
               Book a Demo
             </button>
-            <button className="w-full sm:w-auto border border-gray-200 px-10 py-4 rounded-full text-lg font-medium hover:bg-gray-50 transition-colors">
-              Contact Sales
-            </button>
+            <Link href="/docs" className="w-full sm:w-auto">
+              <button 
+                className="w-full border border-gray-200 px-10 py-4 rounded-full text-lg font-medium hover:bg-gray-50 transition-colors"
+              >
+                Explore API
+              </button>
+            </Link>
           </div>
         </div>
       </section>
 
       <Footer />
+      <ArchitectureModal 
+        isOpen={isArchitectureModalOpen} 
+        onClose={() => setIsArchitectureModalOpen(false)} 
+      />
     </main>
   );
 }

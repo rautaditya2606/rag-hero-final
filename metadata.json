@@ -1,5 +1,5 @@
 {
-  "name": "RAG Studio",
-  "description": "The Enterprise RAG Platform for building production-ready AI assistants on private data.",
+  "name": "Rag-Studio",
+  "description": "The Enterprise Rag-Studio Platform for building production-ready AI assistants on private data.",
   "requestFramePermissions": []
 }

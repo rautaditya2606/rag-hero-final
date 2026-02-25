@@ -5,6 +5,10 @@
   --font-serif: var(--font-serif);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @layer base {
   body {
     @apply font-sans;
@@ -24,6 +28,15 @@
 .dot-grid {
   background-image: radial-gradient(circle, #E5E7EB 1px, transparent 1px);
   background-size: 24px 24px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .noise {
