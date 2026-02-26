@@ -144,7 +144,7 @@ export default function DocsPage() {
             >
               <div className="mb-12">
                 <span className="text-xs font-bold tracking-widest uppercase text-blue-500 mb-4 block">Developer Documentation</span>
-                <h1 className="text-5xl md:text-6xl font-serif mb-6 tracking-tight">External API (v1)</h1>
+                <h1 className="text-5xl md:text-6xl font-sans mb-6 tracking-tight">External API (v1)</h1>
                 <p className="text-xl text-gray-500 max-w-2xl">
                   Integrate Rag-Studio&apos;s powerful retrieval and generation capabilities directly into your custom software stack.
                 </p>
@@ -289,7 +289,7 @@ export default function DocsPage() {
           </div>
 
           <div className="mt-32 p-12 glass rounded-[3rem] text-center border-2 border-black/5 bg-white">
-            <h2 className="text-4xl font-serif mb-6 tracking-tight">Need more scale?</h2>
+            <h2 className="text-4xl font-sans mb-6 tracking-tight">Need more scale?</h2>
             <p className="text-gray-500 mb-10">We offer custom rate limits and dedicated infrastructure for enterprise partners.</p>
             <div className="flex items-center justify-center gap-4">
               <Link href="/" className="bg-black text-white px-8 py-4 rounded-full text-lg font-medium hover:scale-105 transition-transform flex items-center gap-2">

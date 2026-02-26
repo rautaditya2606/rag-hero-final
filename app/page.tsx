@@ -151,7 +151,7 @@ const Hero = ({
         <span className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest uppercase bg-gray-100 rounded-full text-gray-500">
           Enterprise Rag-Studio Platform
         </span>
-        <h1 className="text-6xl md:text-8xl font-serif mb-8 leading-[0.9] tracking-tight">
+        <h1 className="text-6xl md:text-8xl font-sans mb-8 leading-[0.9] tracking-tight">
           Build Production-Ready AI <br />
           <span className="italic text-gray-400">on Your Private Data</span>
         </h1>
@@ -212,7 +212,7 @@ const Problem = () => (
   <section className="py-24 px-6 bg-white">
     <div className="max-w-6xl mx-auto">
       <div className="text-center mb-16">
-        <h2 className="text-4xl font-serif mb-4">The Enterprise Knowledge Gap</h2>
+        <h2 className="text-4xl font-sans mb-4">The Enterprise Knowledge Gap</h2>
         <p className="text-gray-500 max-w-xl mx-auto">Generic LLMs fail when they don&apos;t have access to your specific context. Rag-Studio bridges that gap.</p>
       </div>
       <div className="grid md:grid-cols-3 gap-8">
@@ -252,7 +252,7 @@ const HowItWorks = () => (
   <section id="how-it-works" className="py-24 px-6 border-y border-gray-100">
     <div className="max-w-6xl mx-auto">
       <div className="text-center mb-20">
-        <h2 className="text-4xl font-serif mb-4">How Rag-Studio Works</h2>
+        <h2 className="text-4xl font-sans mb-4">How Rag-Studio Works</h2>
         <p className="text-gray-500">A seamless pipeline from raw data to intelligent answers.</p>
       </div>
       <div className="relative">
@@ -286,7 +286,7 @@ const Features = () => (
     <div className="max-w-6xl mx-auto">
       <div className="grid md:grid-cols-2 gap-20">
         <div>
-          <h2 className="text-4xl font-serif mb-8">Core Capabilities</h2>
+          <h2 className="text-4xl font-sans mb-8">Core Capabilities</h2>
           <div className="space-y-8">
             {[
               { title: "Cost Observability", desc: "Real-time dashboards for token consumption, model costs, and user-level quotas." },
@@ -305,7 +305,7 @@ const Features = () => (
           </div>
         </div>
         <div>
-          <h2 className="text-4xl font-serif mb-8">Advanced Infrastructure</h2>
+          <h2 className="text-4xl font-sans mb-8">Advanced Infrastructure</h2>
           <div className="space-y-8">
             {[
               { title: "Streaming Responses", desc: "Real-time, low-latency answers via WebSockets for a fluid user experience." },
@@ -332,7 +332,7 @@ const Architecture = () => (
   <section id="architecture" className="py-24 px-6 bg-black text-white overflow-hidden">
     <div className="max-w-6xl mx-auto">
       <div className="text-center mb-20">
-        <h2 className="text-4xl font-serif mb-4">Technical Architecture</h2>
+        <h2 className="text-4xl font-sans mb-4">Technical Architecture</h2>
         <p className="text-gray-400">Designed for reliability, security, and performance.</p>
       </div>
       
@@ -384,7 +384,7 @@ const UseCases = () => (
   <section id="use-cases" className="py-24 px-6 bg-white">
     <div className="max-w-6xl mx-auto">
       <div className="text-center mb-16">
-        <h2 className="text-4xl font-serif mb-4">Real-World Applications</h2>
+        <h2 className="text-4xl font-sans mb-4">Real-World Applications</h2>
         <p className="text-gray-500">How organizations are using Rag-Studio today.</p>
       </div>
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -461,7 +461,7 @@ const DeveloperSection = () => (
       <div className="grid md:grid-cols-2 gap-16 items-center">
         <div>
           <span className="text-xs font-bold tracking-widest uppercase text-blue-500 mb-4 block">Built for Developers</span>
-          <h2 className="text-5xl font-serif mb-6">A Headless Rag-Studio Backend for Your Custom Apps</h2>
+          <h2 className="text-5xl font-sans mb-6">A Headless Rag-Studio Backend for Your Custom Apps</h2>
           <p className="text-lg text-gray-600 mb-8 leading-relaxed">
             Rag-Studio provides a robust External API with x-api-key authentication. Manage keys, set usage limits, and integrate powerful retrieval capabilities into your own software stack with simple HTTP requests.
           </p>
@@ -537,7 +537,7 @@ const ArchitectureModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =
 
             <div className="mb-12">
               <span className="text-xs font-bold tracking-widest uppercase text-blue-500 mb-2 block">System Blueprint</span>
-              <h2 className="text-4xl font-serif">Enterprise-Grade Rag-Studio Stack</h2>
+              <h2 className="text-4xl font-sans">Enterprise-Grade Rag-Studio Stack</h2>
               <p className="text-gray-500 mt-2">A deep dive into the Rag-Studio production infrastructure.</p>
             </div>
 
@@ -670,7 +670,7 @@ export default function LandingPage() {
       
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto glass p-12 rounded-[3rem] text-center border-2 border-black/5">
-          <h2 className="text-5xl font-serif mb-6">Ready to build?</h2>
+          <h2 className="text-5xl font-sans mb-6">Ready to build?</h2>
           <p className="text-xl text-gray-500 mb-10">Join 500+ enterprises building the future of knowledge.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button className="w-full sm:w-auto bg-black text-white px-10 py-4 rounded-full text-lg font-medium hover:scale-105 transition-transform">
