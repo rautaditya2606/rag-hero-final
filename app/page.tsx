@@ -13,6 +13,7 @@ import {
   Globe, 
   CheckCircle2, 
   X, 
+  Menu,
   Server, 
   Lock, 
   Activity, 
@@ -22,6 +23,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     const element = document.querySelector(id);
@@ -32,58 +35,103 @@ const Navbar = () => {
         behavior: 'smooth'
       });
     }
+    setIsOpen(false);
   };
 
+  const navLinks = [
+    { name: 'Features', id: '#features' },
+    { name: 'How it works', id: '#how-it-works' },
+    { name: 'Architecture', id: '#architecture' },
+    { name: 'Use Cases', id: '#use-cases' }
+  ];
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center p-6">
-      <motion.div 
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="glass flex items-center gap-8 px-6 py-3 rounded-full shadow-sm"
-      >
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
-            <div className="w-4 h-4 border-2 border-white rounded-sm rotate-45" />
-          </div>
-          <span className="font-bold text-lg tracking-tighter">Rag-Studio</span>
-        </div>
-        <div className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
-          {[
-            { name: 'Features', id: '#features' },
-            { name: 'How it works', id: '#how-it-works' },
-            { name: 'Architecture', id: '#architecture' },
-            { name: 'Use Cases', id: '#use-cases' }
-          ].map((link) => (
-            <motion.a
-              key={link.id}
-              href={link.id}
-              onClick={(e) => scrollToSection(e, link.id)}
-              whileHover={{ scale: 1.05, color: '#000' }}
-              whileTap={{ scale: 0.95 }}
-              className="hover:text-black transition-colors"
-            >
-              {link.name}
-            </motion.a>
-          ))}
-          <Link href="/docs">
-            <motion.span
-              whileHover={{ scale: 1.05, color: '#000' }}
-              whileTap={{ scale: 0.95 }}
-              className="hover:text-black transition-colors cursor-pointer"
-            >
-              Docs
-            </motion.span>
-          </Link>
-        </div>
-        <motion.button 
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="bg-black text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition-all"
+    <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center p-4 md:p-6">
+      <div className="w-full max-w-5xl flex flex-col items-center">
+        <motion.div 
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="glass flex items-center justify-between md:justify-center gap-4 md:gap-8 px-6 py-2 md:py-3 rounded-full shadow-sm w-full md:w-auto"
         >
-          Request Demo
-        </motion.button>
-      </motion.div>
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
+              <div className="w-4 h-4 border-2 border-white rounded-sm rotate-45" />
+            </div>
+            <span className="font-bold text-lg tracking-tighter">Rag-Studio</span>
+          </Link>
+
+          <div className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
+            {navLinks.map((link) => (
+              <motion.a
+                key={link.id}
+                href={link.id}
+                onClick={(e) => scrollToSection(e, link.id)}
+                whileHover={{ scale: 1.05, color: '#000' }}
+                whileTap={{ scale: 0.95 }}
+                className="hover:text-black transition-colors"
+              >
+                {link.name}
+              </motion.a>
+            ))}
+            <Link href="/docs">
+              <motion.span
+                whileHover={{ scale: 1.05, color: '#000' }}
+                whileTap={{ scale: 0.95 }}
+                className="hover:text-black transition-colors cursor-pointer"
+              >
+                Docs
+              </motion.span>
+            </Link>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="hidden md:block bg-black text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition-all"
+            >
+              Request Demo
+            </motion.button>
+            <button 
+              onClick={() => setIsOpen(!isOpen)}
+              className="md:hidden p-2 text-gray-600 hover:text-black transition-colors focus:outline-none"
+            >
+              {isOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
+        </motion.div>
+
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+              className="md:hidden mt-3 w-full glass rounded-[2rem] p-6 shadow-xl flex flex-col gap-4 text-center border border-black/5"
+            >
+              {navLinks.map((link) => (
+                <a
+                  key={link.id}
+                  href={link.id}
+                  onClick={(e) => scrollToSection(e, link.id)}
+                  className="text-lg font-medium text-gray-600 hover:text-black transition-colors"
+                >
+                  {link.name}
+                </a>
+              ))}
+              <Link href="/docs" onClick={() => setIsOpen(false)}>
+                <span className="text-lg font-medium text-gray-600 hover:text-black transition-colors block">Docs</span>
+              </Link>
+              <hr className="border-black/5" />
+              <button className="bg-black text-white px-5 py-3 rounded-full text-sm font-medium hover:bg-gray-800 transition-all w-full">
+                Request Demo
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </nav>
   );
 };

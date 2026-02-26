@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   ChevronLeft, 
   Terminal, 
@@ -11,7 +11,9 @@ import {
   MessageSquare, 
   Settings,
   Zap,
-  ArrowRight
+  ArrowRight,
+  Menu,
+  X
 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -44,6 +46,7 @@ const CodeBlock = ({ code, language = 'bash' }: { code: string, language?: strin
 };
 
 export default function DocsPage() {
+  const [isOpen, setIsOpen] = useState(false);
   const sections = [
     { id: 'authentication', title: '1. Authentication', icon: <Shield size={16} /> },
     { id: 'collections', title: '2. Collections', icon: <Settings size={16} /> },
@@ -58,18 +61,59 @@ export default function DocsPage() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center">
             <Link href="/" className="flex items-center gap-2 group">
-              <ChevronLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
+              <ChevronLeft size={20} className="group-hover:-translate-x-1 transition-transform text-gray-400 group-hover:text-black" />
+              <div className="w-6 h-6 bg-black rounded flex items-center justify-center">
+                <div className="w-3 h-3 border-2 border-white rounded-sm rotate-45" />
+              </div>
               <span className="font-bold tracking-tighter text-xl text-black">Rag-Studio</span>
             </Link>
-            <span className="text-gray-400 font-medium ml-4 border-l pl-4 border-gray-200">API Docs</span>
+            <span className="hidden sm:block text-gray-400 font-medium ml-4 border-l pl-4 border-gray-200">API Docs</span>
           </div>
+
+          <button 
+            onClick={() => setIsOpen(!isOpen)}
+            className="lg:hidden p-2 text-gray-600 hover:text-black transition-colors flex items-center gap-2 focus:outline-none"
+          >
+            {isOpen ? <X size={20} /> : <div className="flex items-center gap-2 font-medium text-xs uppercase tracking-wider">Navigation <Menu size={18} /></div>}
+          </button>
         </div>
+
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="lg:hidden overflow-hidden bg-white/80 backdrop-blur-md"
+            >
+              <div className="py-4 border-t border-gray-100 flex flex-col">
+                {sections.map((section) => (
+                  <a
+                    key={section.id}
+                    href={`#${section.id}`}
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center gap-3 px-6 py-4 text-sm font-medium text-gray-500 hover:text-black hover:bg-gray-50 transition-all border-b border-gray-50"
+                  >
+                    <span className="text-gray-400">{section.icon}</span>
+                    {section.title}
+                  </a>
+                ))}
+                <Link 
+                  href="/"
+                  className="px-6 py-4 text-sm font-bold text-black hover:bg-gray-50 transition-all"
+                >
+                  Return Home
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col lg:flex-row gap-12 pt-32 pb-24">
           {/* Sticky Sidebar Index */}
-          <aside className="lg:w-64 shrink-0">
+          <aside className="hidden lg:block lg:w-64 shrink-0">
             <div className="lg:sticky lg:top-32 space-y-8">
               <div>
                 <h4 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-4">On this page</h4>
